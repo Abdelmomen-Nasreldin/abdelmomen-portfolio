@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, signal, inject, PLATFORM_ID, afterNextRender } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Component, ChangeDetectionStrategy, signal, inject, OnInit, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { NAV_ITEMS } from '../../config/nav.config';
 import { SITE_CONFIG } from '../../config/site.config';
 import { ThemeToggle } from '../../shared/ui/theme-toggle/theme-toggle';
@@ -81,21 +81,21 @@ import { Icon } from '../../shared/ui/icon/icon';
     </header>
   `,
 })
-export class Header {
+export class Header implements OnInit, OnDestroy {
   protected readonly navItems = NAV_ITEMS;
   protected readonly name = SITE_CONFIG.name.split(' ')[0];
   protected readonly mobileMenuOpen = signal(false);
   protected readonly activeSection = signal('');
 
-  private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private ticking = false;
 
-  constructor() {
-    afterNextRender(() => {
-      if (!isPlatformBrowser(this.platformId)) return;
-      window.addEventListener('scroll', this.onScroll, { passive: true });
-    });
+  ngOnInit(): void {
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   private readonly onScroll = (): void => {
