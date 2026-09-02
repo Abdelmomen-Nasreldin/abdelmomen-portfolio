@@ -7,8 +7,9 @@ export const SITE_CONFIG = {
   description:
     'Frontend Software Engineer with 4+ years of experience building scalable Angular applications, recognized as an Angular expert and instructor.',
   email: 'abdelmomen.nasr@gmail.com',
-  resumeUrl: 'https://drive.google.com/file/d/1kBlHWypnZCXM0XTXVvSGRLDNWaxR78Wy/view?usp=sharing', // TODO: Place real resume.pdf in public/assets/
-  siteUrl: 'https://abdelmomen.online',
+  resumeUrl: 'https://drive.google.com/file/d/1kBlHWypnZCXM0XTXVvSGRLDNWaxR78Wy/view?usp=sharing',
+  siteUrl: 'https://abdelmomen.dev',
+  socialImageUrl: 'https://abdelmomen.dev/assets/social-preview.png',
 } as const;
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [

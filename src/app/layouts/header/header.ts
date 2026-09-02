@@ -1,5 +1,13 @@
-import { Component, ChangeDetectionStrategy, signal, inject, OnInit, OnDestroy } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  inject,
+  OnDestroy,
+  PLATFORM_ID,
+  afterNextRender,
+} from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { NAV_ITEMS } from '../../config/nav.config';
 import { SITE_CONFIG } from '../../config/site.config';
 import { ThemeToggle } from '../../shared/ui/theme-toggle/theme-toggle';
@@ -81,28 +89,36 @@ import { Icon } from '../../shared/ui/icon/icon';
     </header>
   `,
 })
-export class Header implements OnInit, OnDestroy {
+export class Header implements OnDestroy {
   protected readonly navItems = NAV_ITEMS;
   protected readonly name = SITE_CONFIG.name.split(' ')[0];
   protected readonly mobileMenuOpen = signal(false);
   protected readonly activeSection = signal('');
 
   private readonly document = inject(DOCUMENT);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly browserWindow = this.document.defaultView;
   private ticking = false;
 
-  ngOnInit(): void {
-    window.addEventListener('scroll', this.onScroll, { passive: true });
+  constructor() {
+    afterNextRender(() => {
+      if (!isPlatformBrowser(this.platformId) || !this.browserWindow) return;
+
+      this.browserWindow.addEventListener('scroll', this.onScroll, { passive: true });
+    });
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('scroll', this.onScroll);
+    this.browserWindow?.removeEventListener('scroll', this.onScroll);
   }
 
   private readonly onScroll = (): void => {
-    if (this.ticking) return;
+    const browserWindow = this.browserWindow;
+    if (this.ticking || !browserWindow) return;
+
     this.ticking = true;
-    requestAnimationFrame(() => {
-      const scrollY = window.scrollY + 120;
+    browserWindow.requestAnimationFrame(() => {
+      const scrollY = browserWindow.scrollY + 120;
       let current = '';
       const sections = this.document.querySelectorAll('section[id]');
       sections.forEach((section) => {

@@ -9,7 +9,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
   template: `
     <section
       [id]="sectionId()"
-      class="mx-auto w-full max-w-6xl px-6 py-20 md:py-28 lg:px-8"
+      class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20 lg:px-8"
     >
       <ng-content />
     </section>

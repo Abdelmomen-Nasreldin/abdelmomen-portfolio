@@ -4,7 +4,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
   selector: 'app-section-heading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="mb-12 md:mb-16">
+    <div class="mb-10 md:mb-12">
       @if (label(); as label) {
         <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-accent">
           {{ label }}
