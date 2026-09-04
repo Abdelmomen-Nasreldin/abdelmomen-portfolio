@@ -10,6 +10,8 @@
 
 > **Static SEO update — 2 September 2026:** The portfolio now uses Angular build-time prerendering with static output. Production HTML contains the complete home page before JavaScript executes, while the saved/system theme, scroll navigation, counters, and reveal animations remain client-side enhancements. `npm run verify:prerender` rebuilds the site and checks the generated HTML for public content and SEO metadata. Static-host deployment remains the intended release model; no Express or persistent Node runtime is included.
 
+> **Domain status update — 5 September 2026:** `https://abdelmomen.dev/` is the canonical public identity. The earlier `.online` references record an interim configuration and are superseded by the deployed domain.
+
 ## Executive answer
 
 This is a strong, credible starting point for an Angular-focused senior frontend portfolio. Its information architecture is coherent, the codebase is deliberately small and maintainable, the production bundle is modest, and the case-study direction is much better than a generic skill-list portfolio.
