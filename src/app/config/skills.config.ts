@@ -39,4 +39,15 @@ export const SKILL_CATEGORIES: readonly SkillCategory[] = [
       'Cross-browser Compatibility',
     ],
   },
+  {
+    title: 'AI-Assisted Development',
+    description:
+      'I use AI-assisted development tools for source exploration, implementation, testing, code review, and documentation. Architecture decisions, validation, and final accountability remain mine.',
+    skills: [
+      'OpenAI Codex',
+      'Cursor',
+      'AI-Assisted Development',
+      'Prompt-Guided Code Review',
+    ],
+  },
 ] as const;

@@ -32,6 +32,11 @@ import { RevealOnScrollDirective } from '../../../../core/directives/reveal-on-s
                 <app-skill-badge [label]="skill" />
               }
             </div>
+            @if (category.description; as description) {
+              <p class="mt-4 text-sm leading-relaxed text-text-secondary">
+                {{ description }}
+              </p>
+            }
           </div>
         }
       </div>

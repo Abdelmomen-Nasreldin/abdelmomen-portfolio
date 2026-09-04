@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
-import { SITE_CONFIG } from '../../config/site.config';
+import { SITE_CONFIG, SOCIAL_LINKS } from '../../config/site.config';
 import { Hero } from './sections/hero/hero';
 import { Trust } from './sections/trust/trust';
 import { About } from './sections/about/about';
@@ -35,6 +35,7 @@ export class Home implements OnInit {
       title: `${SITE_CONFIG.name} | Senior Frontend Engineer`,
       description: SITE_CONFIG.description,
       url: SITE_CONFIG.siteUrl,
+      image: SITE_CONFIG.socialImageUrl,
       type: 'website',
     });
 
@@ -45,6 +46,7 @@ export class Home implements OnInit {
       jobTitle: 'Senior Frontend Engineer',
       description: SITE_CONFIG.description,
       url: SITE_CONFIG.siteUrl,
+      sameAs: SOCIAL_LINKS.map((link) => link.url),
     });
   }
 }

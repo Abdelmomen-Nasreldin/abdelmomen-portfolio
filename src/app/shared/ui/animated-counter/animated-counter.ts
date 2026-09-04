@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-animated-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<span>{{ display() }}</span>`,
+  template: `<span>{{ display() || value() }}</span>`,
 })
 export class AnimatedCounter implements OnDestroy {
   private readonly el = inject(ElementRef);

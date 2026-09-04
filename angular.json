@@ -17,6 +17,10 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "outputPath": {
+              "base": "dist",
+              "browser": "client"
+            },
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -24,17 +28,12 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
+            "styles": ["src/styles.css"],
             "security": {
               "allowedHosts": []
             },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "server": "src/main.server.ts",
+            "outputMode": "static"
           },
           "configurations": {
             "production": {
