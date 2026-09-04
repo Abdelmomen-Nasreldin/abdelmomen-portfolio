@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const outputPath = resolve(projectRoot, 'dist', 'Mo-portfolio', 'browser', 'index.html');
+const outputPath = resolve(projectRoot, 'dist', 'client', 'index.html');
 const html = readFileSync(outputPath, 'utf8');
 
 const failures = [];
