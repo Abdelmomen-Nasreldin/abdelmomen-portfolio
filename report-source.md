@@ -4,19 +4,19 @@
 **Date:** 2 September 2026
 **Scope:** read-only review of the Angular source, production build, available unit tests, and the public site configuration. This is an initial assessment, not an implementation plan or a visual design sign-off.
 
-> **Implementation update — 2 September 2026:** The narrow SEO/trust cleanup identified below has been completed in the workspace and verified by a production build and unit tests. The owner selected `https://abdelmomen.dev/` as the canonical URL; placeholder project actions and unsupported quantitative claims were removed; social metadata, a social-preview image, `robots.txt`, `sitemap.xml`, and configuration guard tests were added. Deployment and a redirect from the previous `.online` address are the remaining steps.
+> **Implementation update — 2 September 2026:** The narrow SEO/trust cleanup identified below was completed in the workspace and verified by a production build and unit tests. The owner selected `https://abdelmomen.dev/` as the canonical URL; placeholder project actions and unsupported quantitative claims were removed; social metadata, a social-preview image, `robots.txt`, `sitemap.xml`, and configuration guard tests were added. The static deployment was completed on 5 September 2026.
 
 > **Portfolio-content update — 2 September 2026:** The generic café, course-platform, and tourism case studies were replaced with current, source-grounded Cafe Manager and Dental Clinic Management System case studies. Private project repositories remain intentionally unlinked; no public source or demo URL is presented as proof for a different codebase.
 
 > **Static SEO update — 2 September 2026:** The portfolio now uses Angular build-time prerendering with static output. Production HTML contains the complete home page before JavaScript executes, while the saved/system theme, scroll navigation, counters, and reveal animations remain client-side enhancements. `npm run verify:prerender` rebuilds the site and checks the generated HTML for public content and SEO metadata. Static-host deployment remains the intended release model; no Express or persistent Node runtime is included.
 
-> **Domain status update — 5 September 2026:** `https://abdelmomen.dev/` is the canonical public identity. The earlier `.online` references record an interim configuration and are superseded by the deployed domain.
+> **Domain status update — 5 September 2026:** `https://abdelmomen.dev/` is the canonical public identity, deployed through Cloudflare Pages with HTTPS. The earlier `.online` references record an interim configuration; `abdelmomen.online` is intentionally retired and has no redirect.
 
 ## Executive answer
 
 This is a strong, credible starting point for an Angular-focused senior frontend portfolio. Its information architecture is coherent, the codebase is deliberately small and maintainable, the production bundle is modest, and the case-study direction is much better than a generic skill-list portfolio.
 
-It is **not ready to be treated as a finished public portfolio yet**. The immediate reason is trust, not styling: four project links still use placeholder domains/accounts, and the canonical URL points to a domain that does not resolve while the configured `.online` site is live. Those defects can send a recruiter or a crawler to dead destinations and weaken the strongest part of the portfolio: the project evidence.
+At the time of this first review, it was **not ready to be treated as a finished public portfolio**. The immediate reason was trust, not styling: four project links used placeholder domains/accounts, and the canonical URL pointed to a domain that did not resolve while a temporary `.online` site was live. Those defects could send a recruiter or a crawler to dead destinations and weaken the strongest part of the portfolio: the project evidence.
 
 The recommended first delivery slice is therefore narrow: make the public identity consistent, replace or remove every placeholder link, make project claims strictly evidence-backed, then add a small set of meaningful user-facing tests. Do not start by adding visual flourishes or more sections.
 
@@ -32,7 +32,7 @@ The recommended first delivery slice is therefore narrow: make the public identi
 
 | Priority | Finding | Evidence | Why it matters | Recommended decision |
 |---|---|---|---|---|
-| P0 | Public identity was inconsistent and canonicalization was broken. | At review time, `SITE_CONFIG.siteUrl` was `https://abdelmomen.online` while `index.html` canonical was `https://abdelmomen.dev/`. On 2 Sep 2026 the `.online` address returned HTTP 200 while `.dev` did not resolve. | Search engines and shared previews receive contradictory identity signals; a canonical domain cannot remain unavailable. | **Resolved in source:** the owner selected `.dev`, and all portfolio identity metadata now uses it. The hosting cutover must connect `.dev` and redirect `.online` to it. |
+| P0 | Public identity was inconsistent and canonicalization was broken. | At review time, `SITE_CONFIG.siteUrl` was `https://abdelmomen.online` while `index.html` canonical was `https://abdelmomen.dev/`. On 2 Sep 2026 the `.online` address returned HTTP 200 while `.dev` did not resolve. | Search engines and shared previews receive contradictory identity signals; a canonical domain cannot remain unavailable. | **Resolved:** the owner selected `.dev`, all portfolio identity metadata uses it, and it was deployed on 5 September 2026. The old `.online` domain is intentionally retired without a redirect. |
 | P0 | Four case-study actions lead to placeholder destinations. | `projects.config.ts` has three `github.com/YOUR_GITHUB/...` URLs and `https://your-tourism-demo.com`. | A visitor who checks the proof behind the claims reaches an obvious placeholder or a dead site. This is a direct credibility loss. | Replace with verified public URLs, use a private-but-authorized case-study page, or remove the action until proof can be published. Never deploy placeholders. |
 | P1 | Project claims are more specific than their public proof currently is. | Statements include “conflict-free replicated data handling,” “sub-100ms UI interactions,” “reducing initial bundle by 40%,” “Lighthouse above 90,” and “under 2 seconds on 3G,” but no linked evidence, dates, device/network profile, or repository is supplied. | Strong quantified claims make an evaluator look for proof. Unsupported precision risks looking templated even if the work is real. | Keep the project structure, but revise each case study around verifiable context, your contribution, the trade-off, and outcome. Retain metrics only with an explainable measurement method and date. |
 | P1 | Social-share cards cannot yet show a custom visual. | `twitter:card` is `summary_large_image`, but neither static metadata nor the runtime SEO service provides a verified `og:image`/`twitter:image`; no social image asset is present. | Shared links are likely to render as text-only/weak previews, despite requesting a large-image card. | Create one branded 1200×630 social preview, host it under the chosen canonical domain, and set the absolute image URL plus `og:url`. |
@@ -60,7 +60,7 @@ When real project imagery is introduced, use responsive image markup and Angular
 ### Phase 1 — credibility and launch identity
 
 1. Connect the owner-selected `abdelmomen.dev` domain to the production host.
-2. Redirect `abdelmomen.online` to `abdelmomen.dev`, then verify the canonical URL, JSON-LD, and Open Graph URL in the deployed site.
+2. Verify the canonical URL, JSON-LD, and Open Graph URL in the deployed site. Keep `abdelmomen.online` intentionally retired and unredirected.
 3. Replace each placeholder project action with a working, authorized URL; otherwise deliberately hide it.
 4. Rewrite metrics and project descriptions around only claims you can substantiate.
 5. Add the social preview image and validate an actual shared-link preview.
