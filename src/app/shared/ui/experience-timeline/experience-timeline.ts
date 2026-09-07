@@ -1,26 +1,25 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { Experience } from '../../../models/experience.model';
 import { Icon } from '../icon/icon';
-import { RevealOnScrollDirective } from '../../../core/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-experience-timeline',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon, RevealOnScrollDirective],
+  imports: [Icon],
   template: `
     <div class="relative">
       <div class="absolute left-4 top-0 hidden h-full w-px bg-border md:block"></div>
 
       <div class="space-y-8 md:space-y-12">
         @for (exp of items(); track exp.company; let i = $index) {
-          <div
-            appRevealOnScroll
-            [delay]="i * 100"
-            class="relative md:pl-12"
-          >
-            <div class="absolute left-2.5 top-1.5 hidden h-3 w-3 rounded-full border-2 border-accent bg-surface md:block"></div>
+          <div class="relative md:pl-12">
+            <div
+              class="absolute left-2.5 top-1.5 hidden h-3 w-3 rounded-full border-2 border-accent bg-surface md:block"
+            ></div>
 
-            <div class="rounded-xl border border-border bg-surface-elevated p-5 transition-colors hover:border-accent/30 md:p-6">
+            <div
+              class="rounded-xl border border-border bg-surface-elevated p-5 transition-colors hover:border-accent/30 md:p-6"
+            >
               <div class="mb-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h3 class="text-lg font-bold text-text-primary">{{ exp.company }}</h3>

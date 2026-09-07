@@ -1,24 +1,6 @@
 import { TrustStat } from '../models/trust-stat.model';
-
 export const TRUST_STATS: readonly TrustStat[] = [
-  {
-    value: '4+',
-    label: 'Years Experience',
-    description: 'Building production Angular applications',
-  },
-  {
-    value: 'Vodafone',
-    label: 'Egypt',
-    description: 'Enterprise-scale frontend engineering',
-  },
-  {
-    value: 'Angular',
-    label: 'Instructor at NTI',
-    description: '60-hour curriculum design & delivery',
-  },
-  {
-    value: 'Mentoring',
-    label: 'Junior Developers',
-    description: 'Code reviews, roadmaps & guidance',
-  },
-] as const;
+  { value: '4+', label: 'Years in frontend', description: 'Customer and business applications' },
+  { value: 'Vodafone', label: 'Frontend Developer', description: 'Egypt · Apr 2024 – Present' },
+  { value: '60 hours', label: 'Angular instruction', description: 'NTI · Jul – Aug 2025' },
+];

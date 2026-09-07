@@ -2,41 +2,31 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SITE_CONFIG, SOCIAL_LINKS } from '../../../../config/site.config';
 import { SectionContainer } from '../../../../shared/ui/section-container/section-container';
 import { CtaButton } from '../../../../shared/ui/cta-button/cta-button';
-import { SocialLinks } from '../../../../shared/ui/social-links/social-links';
-import { Icon } from '../../../../shared/ui/icon/icon';
-import { RevealOnScrollDirective } from '../../../../core/directives/reveal-on-scroll.directive';
-
 @Component({
   selector: 'app-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SectionContainer, CtaButton, SocialLinks, Icon, RevealOnScrollDirective],
+  imports: [SectionContainer, CtaButton],
   template: `
     <app-section-container sectionId="contact">
-      <div appRevealOnScroll class="mx-auto max-w-2xl text-center">
-        <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-accent">
-          Get in touch
-        </p>
-        <h2 class="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
-          Let&apos;s build something great
+      <div class="rounded-2xl border border-border bg-surface-elevated p-6 md:p-10">
+        <p class="text-sm font-semibold uppercase tracking-widest text-accent">Let’s talk</p>
+        <h2 class="mt-4 text-3xl font-bold md:text-4xl">
+          Looking for an Angular frontend engineer?
         </h2>
-        <p class="mt-4 text-lg text-text-secondary">
-          Open to frontend engineering and full-stack opportunities. If you&apos;re looking for a
-          developer who cares deeply about architecture, performance, and code quality, let&apos;s connect.
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-text-secondary">
+          I’m based in Egypt and open to frontend employment and contracting, remote collaboration,
+          and relocation to the Gulf or Europe.
         </p>
-
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <app-cta-button variant="primary" [href]="'mailto:' + email" [external]="true">
-            <app-icon name="mail" className="w-4 h-4" />
-            Send an Email
-          </app-cta-button>
-          <app-cta-button variant="secondary" [href]="linkedInUrl" [external]="true">
-            <app-icon name="linkedin" className="w-4 h-4" />
-            LinkedIn
-          </app-cta-button>
-        </div>
-
-        <div class="mt-10 flex justify-center">
-          <app-social-links [links]="socialLinks" />
+        <a
+          [href]="'mailto:' + email"
+          class="mt-5 inline-block break-all font-medium text-accent underline underline-offset-4"
+          >{{ email }}</a
+        >
+        <div class="mt-7 flex flex-wrap gap-3">
+          <app-cta-button [href]="'mailto:' + email">Send an email</app-cta-button>
+          <app-cta-button variant="secondary" [href]="linkedInUrl" [external]="true"
+            >Connect on LinkedIn</app-cta-button
+          >
         </div>
       </div>
     </app-section-container>
@@ -44,6 +34,5 @@ import { RevealOnScrollDirective } from '../../../../core/directives/reveal-on-s
 })
 export class Contact {
   protected readonly email = SITE_CONFIG.email;
-  protected readonly linkedInUrl = SOCIAL_LINKS.find(l => l.icon === 'linkedin')?.url ?? '#';
-  protected readonly socialLinks = SOCIAL_LINKS;
+  protected readonly linkedInUrl = SOCIAL_LINKS.find((link) => link.icon === 'linkedin')!.url;
 }

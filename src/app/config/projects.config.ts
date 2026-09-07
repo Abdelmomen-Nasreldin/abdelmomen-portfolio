@@ -1,74 +1,119 @@
 import { Project } from '../models/project.model';
-
 export const FEATURED_PROJECTS: readonly Project[] = [
   {
     id: 'cafe-manager',
-    title: 'Cafe Manager',
-    subtitle: 'Offline Windows Café POS & Operations',
+    title: 'Café Manager',
+    subtitle: 'An offline Windows point of sale for an independent café',
     overview:
-      'A desktop point-of-sale and café operations system for Moods Cafe, built for reliable single-machine operation without a cloud service or web API.',
+      'A desktop application that brings ordering, customer credit, inventory, and reporting into one local workspace. Built around the daily work of an owner and a cashier.',
     problem:
-      'A café needs to create and settle orders, manage its menu and inventory, print receipts, and protect operational records even when the internet is unavailable.',
-    challenges: [
-      'Keeping order, payment, stock, and reporting semantics consistent in a local-first desktop application',
-      'Making sensitive order and inventory changes safe to retry without duplicating operational effects',
-      'Supporting owner and cashier workflows without exposing owner-only administration and recovery actions',
-      'Protecting upgrade, backup, restore, and device-licensing workflows for a real café deployment',
+      'A café needs to keep serving customers when the internet is unavailable. The cashier needs a clear way to assemble orders and record payment, while the owner needs to maintain the menu and understand the business.',
+    role: 'Independent product development',
+    status: 'Business application',
+    context: 'Single café · Windows desktop · Local SQLite storage',
+    stack: ['Angular', 'TypeScript', 'Tauri', 'Rust', 'SQLite'],
+    decisions: [
+      {
+        title: 'Keep the order journey in one workspace',
+        approach:
+          'The interface brings product selection and the current order together. Separate owner and cashier views keep administration away from the main service workflow.',
+        tradeoff:
+          'A focused single-device workflow keeps the interface manageable, but does not provide multi-till synchronization or online ordering.',
+      },
+      {
+        title: 'Use Angular in a native desktop host',
+        approach:
+          'Angular supplies the interface and state management; Tauri connects it to local storage and desktop capabilities. Orders and menu data live in SQLite on the machine.',
+        tradeoff:
+          'Working without a cloud service makes local backup, recovery, and Windows-specific testing part of operating the product.',
+      },
     ],
-    architectureDecisions: [
-      'Built an Angular 21 webview inside a Tauri 2 Windows desktop host',
-      'Used a local SQLite database as the operational source of truth, with no cloud backend or network API',
-      'Moved critical order, inventory, and recipe operations behind native atomic SQLite commands',
-      'Separated owner and cashier access while keeping licensing, backup, path, and printing capabilities narrowly scoped',
+    outcomes: [
+      'A connected workflow for creating orders, recording settlement, and preparing receipts.',
+      'Owner tools for menu maintenance, recipes, ingredient stock, customer credit, and reports.',
+      'A desktop delivery model that does not require a cloud API for daily operation.',
     ],
-    stack: ['Angular 21', 'TypeScript', 'Tauri 2', 'Rust', 'SQLite', 'Tailwind CSS'],
-    keyFeatures: [
-      'Order creation, settlement, and receipt-printing workflows',
-      'Menu, customer, recipe, and ingredient-based inventory management',
-      'Owner reporting, data-health, backup, restore, and device-licensing workflows',
-      'Operational inventory visibility for both owner and cashier roles',
-      'Offline-first Windows desktop deployment',
+    reflection:
+      'The next priority is making exceptional situations as clear as the normal sale: correcting a mistake, handling unpaid work, and explaining stock changes.',
+    attribution:
+      'My independently developed application for an independent café. Demonstration captures use fictional data.',
+    images: [
+      {
+        src: '/assets/projects/cafe-order.webp',
+        previewSrc: '/assets/projects/cafe-order-card.webp',
+        width: 1536,
+        height: 816,
+        alt: 'Café point of sale with a product menu and a two-item demonstration cart',
+        caption:
+          'The ordering workspace keeps product selection, quantities, and the running total together. Fictional menu and demonstration order.',
+      },
+      {
+        src: '/assets/projects/cafe-orders.webp',
+        width: 1536,
+        height: 816,
+        alt: 'Café order list showing two fictional pending orders and status filters',
+        caption:
+          'Order tracking separates pending, paid, postponed, and cancelled work, with date and shift filters. All customers and transactions shown are fictional.',
+      },
     ],
-    engineeringHighlights: [
-      'Atomic, auditable order transitions with idempotent operation handling',
-      'Financial reporting based on completed order operations rather than mutable order status alone',
-      'Atomic product-and-recipe saves and ingredient movement handling',
-      'Versioned upgrade and recovery work designed to preserve existing café data',
-    ],
+    evidence: [],
   },
   {
     id: 'dental-clinic-management',
     title: 'Dental Clinic Management System',
-    subtitle: 'Offline Single-Clinic Workflow — Actively Developed',
+    subtitle: 'From appointment scheduling to reception checkout',
     overview:
-      'A bilingual Angular, Express, and SQLite application for a single dental clinic, designed for local Windows and private-LAN operation with role-specific clinical and reception workflows.',
+      'A bilingual application for a single clinic, connecting appointments, treatment records, and front-desk workflows. Different roles see the information relevant to their work.',
     problem:
-      'A clinic needs a dependable daily flow from scheduling and treatment through safe front-desk checkout, while preserving patient privacy, financial integrity, and auditability.',
-    challenges: [
-      'Connecting clinical treatment completion with Reception checkout without exposing clinical details',
-      'Keeping appointment, patient, visit, treatment, billing, and audit effects consistent under concurrent use',
-      'Enforcing different operational access for Admin, Dentist, and Reception roles',
-      'Evolving an offline SQLite product without fabricating or silently rewriting historical clinic records',
+      'Scheduling, treatment, and payment happen at different points in a clinic visit. The interface needs to connect those steps without making reception staff work through private clinical information.',
+    role: 'Independent product development',
+    status: 'Actively developed',
+    context: 'Single clinic · Windows / private LAN · Arabic and English',
+    stack: ['Angular', 'TypeScript', 'Express', 'SQLite', 'Socket.IO'],
+    decisions: [
+      {
+        title: 'Design around the handoff to reception',
+        approach:
+          'The clinical workflow and reception checkout are separate views of the same visit. Reception receives operational information for the next step, while treatment details stay in the clinical workflow.',
+        tradeoff:
+          'Separate role-specific views require deliberate API payloads and coordinated status updates, rather than simply hiding fields in the browser.',
+      },
+      {
+        title: 'Treat Arabic and English as complete interfaces',
+        approach:
+          'The Angular interface supports both languages and right-to-left layouts, including scheduling, patient workflows, and printing. A local Express service coordinates data shared by clinic users.',
+        tradeoff:
+          'Each language and role adds a meaningful combination to test. Local operation also means deployment and recovery need attention alongside the interface.',
+      },
     ],
-    architectureDecisions: [
-      'Kept Express and SQLite server-authoritative for workflow transitions, validation, and financial rules',
-      'Used role-shaped HTTP and Socket.IO payloads to preserve Reception privacy boundaries',
-      'Protected operational commands with version checks and idempotency keys',
-      'Kept the product single-clinic, offline-capable, bilingual, and free of cloud-sync or multi-clinic scope',
+    outcomes: [
+      'A linked appointment, treatment, and checkout workflow for clinic staff.',
+      'Role-specific screens for Admin, Dentist, and Reception, with Arabic and English interfaces.',
+      'Treatment planning, visit records, account review, and local reporting in one application.',
     ],
-    stack: ['Angular', 'TypeScript', 'Express', 'SQLite', 'Socket.IO', 'Tailwind CSS'],
-    keyFeatures: [
-      'Appointment scheduling, arrival, clinical service, checkout, and release workflow',
-      'Reception-safe account review, follow-up, and next-appointment actions',
-      'Treatment plans, visit records, odontogram workflows, and procedure-derived billing',
-      'Immutable financial events, reporting, CSV export, and bilingual print support',
-      'Local backup, licensing, readiness, and privacy-safe support diagnostics',
+    reflection:
+      'This product is actively developed. The focus is on validating complete staff journeys and difficult handoffs before adding multi-clinic or cloud-sync scope.',
+    attribution:
+      'My independently developed clinic application. Demonstration captures contain fictional patients and records.',
+    images: [
+      {
+        src: '/assets/projects/dental-appointments.webp',
+        previewSrc: '/assets/projects/dental-appointments-card.webp',
+        width: 1265,
+        height: 712,
+        alt: 'Arabic clinic schedule showing appointments for four fictional patients',
+        caption:
+          'The Arabic scheduling view supports the clinic’s daily appointment workflow in a right-to-left layout. All patients and appointments shown are fictional.',
+      },
+      {
+        src: '/assets/projects/dental-chart.webp',
+        width: 1265,
+        height: 712,
+        alt: 'English patient record with dental chart and clinical section tabs for Nour Demo',
+        caption:
+          'The English patient workspace groups visits, charting, treatment plans, prescriptions, and billing. This is a fictional patient record, shown before clinical findings are entered.',
+      },
     ],
-    engineeringHighlights: [
-      'Server-authoritative encounter completion commits linked clinical, billing, audit, and checkout effects atomically',
-      'Checkout access exposes only operationally necessary data to Reception',
-      'Version-guarded and idempotent commands prevent stale or duplicated workflow changes',
-      'Arabic and English experience with an offline local Windows/private-LAN deployment model',
-    ],
+    evidence: [],
   },
-] as const;
+];

@@ -26,7 +26,7 @@ export class CtaButton {
 
     switch (this.variant()) {
       case 'primary':
-        return `${base} bg-accent text-white hover:bg-accent-hover shadow-sm`;
+        return `${base} bg-button text-button-text hover:bg-button-hover shadow-sm`;
       case 'secondary':
         return `${base} border border-border bg-surface text-text-primary hover:bg-surface-hover`;
       case 'ghost':

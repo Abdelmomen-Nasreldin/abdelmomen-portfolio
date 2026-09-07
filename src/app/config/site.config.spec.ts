@@ -4,19 +4,14 @@ import { FEATURED_PROJECTS } from './projects.config';
 describe('public portfolio configuration', () => {
   it('uses the public domain consistently', () => {
     expect(SITE_CONFIG.siteUrl).toBe('https://abdelmomen.dev');
-    expect(SITE_CONFIG.socialImageUrl).toBe(
-      'https://abdelmomen.dev/assets/social-preview.png'
-    );
+    expect(SITE_CONFIG.socialImageUrl).toBe('https://abdelmomen.dev/assets/social-preview.png');
   });
 
   it('contains only valid, non-placeholder public links', () => {
     const links = [
       SITE_CONFIG.resumeUrl,
       ...SOCIAL_LINKS.map((link) => link.url),
-      ...FEATURED_PROJECTS.flatMap((project) => [
-        project.githubUrl,
-        project.liveDemoUrl,
-      ]),
+      ...FEATURED_PROJECTS.flatMap((project) => project.evidence.map((link) => link.url)),
     ].filter((link): link is string => Boolean(link));
 
     expect(links).not.toHaveLength(0);

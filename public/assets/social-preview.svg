@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0f172a"/>
+<rect x="72" y="80" width="64" height="6" rx="3" fill="#93c5fd"/>
+<text x="72" y="166" font-family="Arial, sans-serif" font-size="25" fill="#93c5fd" letter-spacing="3">ANGULAR &amp; TYPESCRIPT</text>
+<text x="72" y="260" font-family="Arial, sans-serif" font-size="62" font-weight="700" fill="#f8fafc">Abdelmomen Nasreldin</text>
+<text x="72" y="335" font-family="Arial, sans-serif" font-size="38" fill="#cbd5e1">Frontend Engineer</text>
+<text x="72" y="421" font-family="Arial, sans-serif" font-size="27" fill="#cbd5e1">Customer journeys. Everyday business tools.</text>
+<line x1="72" y1="490" x2="1128" y2="490" stroke="#334155"/>
+<text x="72" y="552" font-family="Arial, sans-serif" font-size="25" fill="#f8fafc">abdelmomen.dev</text>
+<text x="1128" y="552" text-anchor="end" font-family="Arial, sans-serif" font-size="22" fill="#93c5fd">Selected work &amp; experience</text>
+</svg>

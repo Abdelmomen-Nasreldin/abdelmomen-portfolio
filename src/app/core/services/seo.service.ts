@@ -8,6 +8,7 @@ interface SeoConfig {
   url?: string;
   image?: string;
   type?: string;
+  robots?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +20,16 @@ export class SeoService {
   update(config: SeoConfig): void {
     this.title.setTitle(config.title);
     this.meta.updateTag({ name: 'description', content: config.description });
+    this.meta.updateTag({ name: 'robots', content: config.robots ?? 'index,follow' });
+    if (config.url) {
+      let canonical = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = this.document.createElement('link');
+        canonical.rel = 'canonical';
+        this.document.head.appendChild(canonical);
+      }
+      canonical.href = config.url;
+    }
 
     this.meta.updateTag({ property: 'og:title', content: config.title });
     this.meta.updateTag({ property: 'og:description', content: config.description });
@@ -32,7 +43,9 @@ export class SeoService {
   }
 
   setJsonLd(schema: Record<string, unknown>): void {
-    let script = this.document.querySelector('script[type="application/ld+json"]') as HTMLScriptElement | null;
+    let script = this.document.querySelector(
+      'script[type="application/ld+json"]',
+    ) as HTMLScriptElement | null;
     if (!script) {
       script = this.document.createElement('script');
       script.type = 'application/ld+json';

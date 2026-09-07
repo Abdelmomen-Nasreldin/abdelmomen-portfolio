@@ -3,12 +3,11 @@ import { SKILL_CATEGORIES } from '../../../../config/skills.config';
 import { SectionContainer } from '../../../../shared/ui/section-container/section-container';
 import { SectionHeading } from '../../../../shared/ui/section-heading/section-heading';
 import { SkillBadge } from '../../../../shared/ui/skill-badge/skill-badge';
-import { RevealOnScrollDirective } from '../../../../core/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-expertise',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SectionContainer, SectionHeading, SkillBadge, RevealOnScrollDirective],
+  imports: [SectionContainer, SectionHeading, SkillBadge],
   template: `
     <app-section-container sectionId="expertise">
       <app-section-heading
@@ -19,11 +18,7 @@ import { RevealOnScrollDirective } from '../../../../core/directives/reveal-on-s
 
       <div class="grid gap-8 sm:grid-cols-2">
         @for (category of categories; track category.title; let i = $index) {
-          <div
-            appRevealOnScroll
-            [delay]="i * 100"
-            class="rounded-xl border border-border bg-surface-elevated p-6"
-          >
+          <div class="rounded-xl border border-border bg-surface-elevated p-6">
             <h3 class="mb-4 text-sm font-semibold uppercase tracking-widest text-text-tertiary">
               {{ category.title }}
             </h3>

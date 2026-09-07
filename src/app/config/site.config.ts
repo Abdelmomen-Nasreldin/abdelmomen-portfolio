@@ -2,10 +2,10 @@ import { SocialLink } from '../models/social-link.model';
 
 export const SITE_CONFIG = {
   name: 'Abdelmomen Nasreldin',
-  title: 'Frontend Software Engineer | Angular Specialist',
-  headline: 'Building scalable, performant, enterprise-grade web applications.',
+  title: 'Frontend Engineer | Angular & TypeScript',
+  headline: 'From customer journeys to the tools a business runs on.',
   description:
-    'Frontend Software Engineer with 4+ years of experience building scalable Angular applications, recognized as an Angular expert and instructor.',
+    'Frontend engineer at Vodafone Egypt. I build Angular customer journeys and independently develop offline business applications. Previously an Angular instructor at NTI.',
   email: 'abdelmomen.nasr@gmail.com',
   resumeUrl: 'https://drive.google.com/file/d/1kBlHWypnZCXM0XTXVvSGRLDNWaxR78Wy/view?usp=sharing',
   siteUrl: 'https://abdelmomen.dev',

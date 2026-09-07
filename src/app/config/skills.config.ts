@@ -1,53 +1,24 @@
 import { SkillCategory } from '../models/skill-category.model';
-
 export const SKILL_CATEGORIES: readonly SkillCategory[] = [
   {
-    title: 'Frontend Engineering',
-    skills: [
-      'Angular',
-      'TypeScript',
-      'JavaScript',
-      'RxJS',
-      'HTML',
-      'SCSS',
-      'TailwindCSS',
-    ],
+    title: 'Angular interfaces',
+    skills: ['Angular', 'TypeScript', 'RxJS', 'Signals'],
+    description: 'Customer journeys, reusable components, forms, and application state.',
   },
   {
-    title: 'Architecture & Performance',
-    skills: [
-      'Standalone Components',
-      'State Management',
-      'Signals',
-      'Lazy Loading',
-      'Frontend Architecture',
-      'Performance Optimization',
-      'Reusable Components',
-    ],
+    title: 'UI delivery',
+    skills: ['HTML & CSS', 'Responsive design', 'Tailwind CSS', 'Arabic / RTL'],
+    description: 'Interfaces that work across screen sizes, languages, and user roles.',
   },
   {
-    title: 'Backend',
-    skills: ['Node.js', 'Express', 'MongoDB', 'REST APIs'],
+    title: 'Supporting product work',
+    skills: ['Express', 'SQLite', 'Tauri', 'REST APIs'],
+    description: 'Local services and desktop integration for my independent business applications.',
   },
   {
-    title: 'Engineering Practices',
-    skills: [
-      'Agile',
-      'Git',
-      'Code Reviews',
-      'Responsive Design',
-      'Cross-browser Compatibility',
-    ],
-  },
-  {
-    title: 'AI-Assisted Development',
+    title: 'Working practices',
+    skills: ['Git', 'Code reviews', 'Testing', 'Agile delivery'],
     description:
-      'I use AI-assisted development tools for source exploration, implementation, testing, code review, and documentation. Architecture decisions, validation, and final accountability remain mine.',
-    skills: [
-      'OpenAI Codex',
-      'Cursor',
-      'AI-Assisted Development',
-      'Prompt-Guided Code Review',
-    ],
+      'I use AI-assisted tools for exploration, implementation, and review. Architecture decisions, validation, and final accountability remain mine.',
   },
-] as const;
+];

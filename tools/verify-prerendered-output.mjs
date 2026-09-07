@@ -1,39 +1,55 @@
-import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const outputPath = resolve(projectRoot, 'dist', 'client', 'index.html');
-const html = readFileSync(outputPath, 'utf8');
-
-const failures = [];
-
-function expect(description, condition) {
-  if (!condition) failures.push(description);
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { JSDOM } from 'jsdom';
+const pages = [
+  ['', 'Abdelmomen Nasreldin'],
+  ['projects/cafe-manager', 'Café Manager'],
+  ['projects/dental-clinic-management', 'Dental Clinic Management System'],
+];
+const titles = new Set();
+for (const [route, heading] of pages) {
+  const html = readFileSync('dist/client/' + (route ? route + '/' : '') + 'index.html', 'utf8');
+  const doc = new JSDOM(html).window.document;
+  assert.equal(doc.querySelector('h1')?.textContent.trim(), heading, route + ': heading');
+  assert.equal(doc.querySelectorAll('h1').length, 1, route + ': one primary heading');
+  assert.equal(doc.querySelector('link[rel="canonical"]')?.href, 'https://abdelmomen.dev/' + route);
+  assert.equal(doc.querySelector('meta[name="robots"]')?.content, 'index,follow');
+  assert.ok(
+    doc.querySelector('meta[property="og:image"]')?.content.includes('/assets/social-preview.png'),
+  );
+  assert.ok(!titles.has(doc.title), 'Unique titles');
+  titles.add(doc.title);
+  assert.ok(doc.querySelector('script[type="application/ld+json"]'));
+  assert.ok(!html.includes('Senior Frontend Engineer'), 'Consistent positioning');
+  if (route) {
+    for (const label of [
+      'The problem',
+      'Decisions behind the interface',
+      'What the work delivered',
+      'Ownership & evidence',
+    ]) {
+      assert.ok(doc.body.textContent.includes(label), route + ': static case-study content');
+    }
+  }
+  for (const img of doc.querySelectorAll('img')) {
+    const src = img.getAttribute('src') || img.getAttribute('ngSrc');
+    assert.ok(src && existsSync('public' + src), 'Local image exists: ' + src);
+    assert.ok(img.alt.trim(), 'Image description');
+  }
 }
-
-const appRoot = html.match(/<app-root(?:\s[^>]*)?>([\s\S]*?)<\/app-root>/i);
-const renderedRoot = appRoot?.[1] ?? '';
-
-expect('a non-empty <app-root> containing meaningful rendered content', renderedRoot.replace(/<[^>]+>/g, '').trim().length > 500);
-expect('the hero H1 with Abdelmomen Nasreldin', /<h1[^>]*>[\s\S]*?Abdelmomen\s+Nasreldin[\s\S]*?<\/h1>/i.test(html));
-
-for (const [label, pattern] of [
-  ['the hero section', /<section[^>]+id="hero"/i],
-  ['the projects section', /<section[^>]+id="projects"/i],
-  ['the contact section', /<section[^>]+id="contact"/i],
-  ['the Cafe Manager case study', /Caf(?:e|é|&#233;|&eacute;)\s+Manager/i],
-  ['the Dental Clinic Management System case study', /Dental\s+Clinic\s+Management\s+System/i],
-  ['the AI-assisted development content', /AI-Assisted\s+Development/i],
-  ['the canonical .dev URL', /<link[^>]+rel="canonical"[^>]+href="https:\/\/abdelmomen\.dev\/"/i],
-  ['the social preview image metadata', /<meta[^>]+property="og:image"[^>]+content="https:\/\/abdelmomen\.dev\/assets\/social-preview\.png"/i],
-  ['the Person JSON-LD schema', /<script[^>]+type="application\/ld\+json"[^>]*>[\s\S]*?"@type"\s*:\s*"Person"[\s\S]*?<\/script>/i],
-]) {
-  expect(label, pattern.test(html));
+const missing = new JSDOM(readFileSync('dist/client/404.html', 'utf8')).window.document;
+assert.equal(missing.querySelector('meta[name="robots"]')?.content, 'noindex,follow');
+assert.ok(missing.querySelector('h1')?.textContent.includes('page'));
+const sitemap = readFileSync('public/sitemap.xml', 'utf8');
+for (const [route] of pages) assert.ok(sitemap.includes('https://abdelmomen.dev/' + route));
+assert.ok(existsSync('public/icon.svg'), 'Vector portfolio icon exists');
+for (const size of [32, 180, 512]) {
+  assert.ok(existsSync('public/assets/icon-' + size + '.png'), 'Icon export exists: ' + size);
 }
-
-if (failures.length > 0) {
-  throw new Error(`Prerender verification failed:\n- ${failures.join('\n- ')}`);
-}
-
-console.log(`Prerender verification passed: ${outputPath}`);
+assert.ok(
+  readFileSync('public/manifest.webmanifest', 'utf8').includes('icon-512.png'),
+  'Manifest references icon',
+);
+console.log(
+  'Verified three content pages, full static case studies, metadata, images, sitemap, and 404.',
+);
